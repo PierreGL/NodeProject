@@ -2,9 +2,6 @@ package org.pgl.node;
 
 public class NodeProcessImpl implements NodeProcess {
     
-    /**
-     * Search and return the max value contented in the tree of node.
-     * */
     @Override
     public int findMax(Node root) {
                 
@@ -31,16 +28,7 @@ public class NodeProcessImpl implements NodeProcess {
         return valueMax;
     }
     
-    /**
-     * Provides the Node matching with value.
-     * 
-     * @return return the Node if exist, else return null.
-     * */
-    @Override
-    public Node getNodeByValue(){
-        
-        return null;
-    }
+
     
     /**
      * Compare 3 int values and return the max.
@@ -63,4 +51,16 @@ public class NodeProcessImpl implements NodeProcess {
         
         return result;
     }
+
+	@Override
+	public Node getNodeByValue(Node root, int value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean removeNodeByValue(Node root, int value) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

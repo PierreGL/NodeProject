@@ -57,6 +57,18 @@ public class NodeProcessTestUnit {
         Assert.assertTrue("The max value is incorrect", maxValue == expectedMaxValue);
     }
     
+    @Test
+    public void testRemoveNode(){
+        NodeProcess nodeProcess = new NodeProcessImpl();
+
+        int firstValue = arrayValues[0];
+        int anyValue = arrayValues[arrayValues.length/2];
+        int lastValue = arrayValues[arrayValues.length-1];
+
+        nodeProcess.removeNodeByValue(nodeRoot, firstValue);
+        //TODO to finish
+    }
+    
     
     /**
      * Provides the max value in a defined array.
