@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.pgl.node.Node;
 import org.pgl.node.NodeImpl;
 import org.pgl.node.NodeProcess;
+import org.pgl.node.NodeProcessImpl;
 
 public class NodeProcessTestUnit {
 
@@ -47,7 +48,7 @@ public class NodeProcessTestUnit {
      * */
     @Test
     public void testFindMax(){
-        NodeProcess nodeProcess = new NodeProcess();
+        NodeProcess nodeProcess = new NodeProcessImpl();
         
         int expectedMaxValue = getMaxValueArray(arrayValues);
         
