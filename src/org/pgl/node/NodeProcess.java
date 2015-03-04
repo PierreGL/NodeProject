@@ -21,7 +21,7 @@ public interface NodeProcess {
     Node getNodeByValue(Node root, int value);
     
     /**
-     * Remove the Node defined by value in a tree.
+     * Removes the Node defined by value in a tree.
      * 
      * @param root The root of tree.
      * @param value The value of node to remove.    
