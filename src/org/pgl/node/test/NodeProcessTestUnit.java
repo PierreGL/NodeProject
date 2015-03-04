@@ -87,18 +87,18 @@ public class NodeProcessTestUnit {
         boolean lastIsRemoved = this.nodeProcess.removeNodeByValue(this.nodeRoot, this.lastValue);
         
         //If the nodes has been removed the return value is true
-        Assert.assertTrue("The node ["+this.firstValue+"] has not been removed", firstIsRemoved); 
-        Assert.assertTrue("The node ["+this.anyValue+"] has not been removed", anyIsRemoved); 
-        Assert.assertTrue("The node ["+this.lastValue+"] has not been removed", lastIsRemoved); 
+        Assert.assertTrue("The first node ["+this.firstValue+"] has not been removed", firstIsRemoved); 
+        Assert.assertTrue("The any node ["+this.anyValue+"] has not been removed", anyIsRemoved); 
+        Assert.assertTrue("The last node ["+this.lastValue+"] has not been removed", lastIsRemoved); 
         
         //If a nodes has been removed no node returned, then the value is null.
         Node nodeFirst = this.nodeProcess.getNodeByValue(this.nodeRoot, this.firstValue);
         Node nodeAny = this.nodeProcess.getNodeByValue(this.nodeRoot, this.anyValue);
         Node nodeLast = this.nodeProcess.getNodeByValue(this.nodeRoot, this.lastValue);
         
-        Assert.assertTrue("The node ["+this.firstValue+"] has not been removed", nodeFirst == null); 
-        Assert.assertTrue("The node ["+this.anyValue+"] has not been removed", nodeAny == null); 
-        Assert.assertTrue("The node ["+this.lastValue+"] has not been removed", nodeLast == null); 
+        Assert.assertTrue("The first node ["+this.firstValue+"] exists again", nodeFirst == null); 
+        Assert.assertTrue("The any node ["+this.anyValue+"] exists again", nodeAny == null); 
+        Assert.assertTrue("The last node ["+this.lastValue+"] exists again", nodeLast == null); 
     }
     
     

@@ -4,6 +4,8 @@ public class NodeImpl implements Node {
 
     private int value;
     
+    private Node parent;
+
     private Node leftChild;
     private Node rightChild;
     
@@ -14,12 +16,14 @@ public class NodeImpl implements Node {
     public void addChild(Node node){
         if(node.getValue() > this.value){
             if(this.rightChild == null){
-                this.rightChild = node;
+                node.setParent(this);
+                this.rightChild = node;                
             }else{
                 this.rightChild.addChild(node);
             }
         }else if(node.getValue() < this.value){
             if(this.leftChild == null){
+                node.setParent(this);
                 this.leftChild = node;
             }else{
                 this.leftChild.addChild(node);
@@ -33,6 +37,16 @@ public class NodeImpl implements Node {
         return value;
     }
 
+    @Override
+    public Node getParent() {
+        return parent;
+    }
+    
+    @Override
+    public void setParent(Node parent) {
+        this.parent = parent;        
+    }
+    
     @Override
     public Node getRightChild() {
         return rightChild;

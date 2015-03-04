@@ -6,6 +6,10 @@ public interface Node {
     
     int getValue();
     
+    Node getParent();
+    
+    void setParent(Node parent);
+    
     Node getRightChild();
     
     Node getLeftChild();

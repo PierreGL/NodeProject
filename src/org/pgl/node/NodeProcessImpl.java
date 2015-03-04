@@ -48,16 +48,49 @@ public class NodeProcessImpl implements NodeProcess {
         }else{//value == rootValue
             result = root;
         }
-        
+
         return result;
     }
 
     @Override
-    public boolean removeNodeByValue(Node root, int value) {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean removeNodeByValue(Node current, int valueToRemove) {
+        boolean result = false;
+        
+        Node leftChild = current.getLeftChild();
+        Node rightChild = current.getRightChild();
+        int currentValue = current.getValue();
+
+        if(valueToRemove < currentValue){
+            if(leftChild != null){
+                if(leftChild.getValue() == valueToRemove){
+                    removing(current, leftChild);
+                    result = true;
+                }else{
+                    result = removeNodeByValue(leftChild, valueToRemove);
+                }
+            }//else inexisting child the value has not been found
+
+        }else if(valueToRemove > currentValue){
+            if(rightChild != null){
+                if(rightChild.getValue() == valueToRemove){
+                    removing(current, rightChild);
+                    result = true;
+                }else{
+                    result = removeNodeByValue(rightChild, valueToRemove);
+                }
+            }//else inexisting child the value has not been found
+        }
+            
+        return result;
     }
-    
+
+    /**
+     * Remove the node and if necessary, move the child of removed node in its parent.
+     * */
+    private void removing(Node parent, Node nodeToRemove){
+
+    }
+
     /**
      * Compare 3 int values and return the max.
      * */
@@ -79,4 +112,5 @@ public class NodeProcessImpl implements NodeProcess {
 
         return result;
     }
+
 }
