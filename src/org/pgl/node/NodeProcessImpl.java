@@ -1,49 +1,53 @@
 package org.pgl.node;
 
-public class NodeProcessImpl implements NodeProcess {
+/**
+ * @author pguilletlhomat
+ * */
+public class NodeProcessImpl<K extends Comparable<K>, E> implements NodeProcess<K, E> {
+
+    //TODO
+//    @Override
+//    public E findMax(Node<K, E> root) {
+//
+//        K rootValue = root.getKey();
+//        K rightValueMax;
+//        K leftValueMax;
+//        Node<K, E> rightChild = root.getRightChild();
+//        Node<K, E> leftChild = root.getLeftChild();
+//
+//        if(rightChild != null){
+//            rightValueMax = findMax(rightChild);
+//        }else{
+//            rightValueMax = Integer.MIN_VALUE;
+//        }
+//
+//        if(leftChild != null){
+//            leftValueMax = findMax(leftChild);
+//        }else{
+//            leftValueMax = Integer.MIN_VALUE;
+//        }
+//
+//        int valueMax = getMaxValue(rootValue, leftValueMax, rightValueMax);
+//
+//        return valueMax;
+//    }
 
     @Override
-    public int findMax(Node root) {
+    public Node<K, E> getNodeByKey(Node<K, E> root, K key) {
 
-        int rootValue = root.getValue();
-        int rightValueMax;
-        int leftValueMax;
-        Node rightChild = root.getRightChild();
-        Node leftChild = root.getLeftChild();
+        Node<K, E> result = null;
 
-        if(rightChild != null){
-            rightValueMax = findMax(rightChild);
-        }else{
-            rightValueMax = Integer.MIN_VALUE;
-        }
+        K rootKey = root.getKey();
 
-        if(leftChild != null){
-            leftValueMax = findMax(leftChild);
-        }else{
-            leftValueMax = Integer.MIN_VALUE;
-        }
-
-        int valueMax = getMaxValue(rootValue, leftValueMax, rightValueMax);
-
-        return valueMax;
-    }
-
-    @Override
-    public Node getNodeByValue(Node root, int value) {
-
-        Node result = null;
-
-        int rootValue = root.getValue();
-
-        if(value > rootValue){
-            Node rightNode = root.getRightChild();
+        if(key.compareTo(rootKey) > 0){
+            Node<K, E> rightNode = root.getRightChild();
             if(rightNode != null){
-                result = getNodeByValue(rightNode, value);
+                result = getNodeByKey(rightNode, key);
             }
-        }else if(value < rootValue){
-            Node leftNode = root.getLeftChild();
+        }else if(key.compareTo(rootKey) <0){
+            Node<K, E> leftNode = root.getLeftChild();
             if(leftNode != null){
-                result = getNodeByValue(leftNode, value);
+                result = getNodeByKey(leftNode, key);
             }
         }else{//value == rootValue
             result = root;
@@ -53,64 +57,96 @@ public class NodeProcessImpl implements NodeProcess {
     }
 
     @Override
-    public boolean removeNodeByValue(Node current, int valueToRemove) {
+    public boolean removeNodeByKey(Node<K, E> current, K key) {
         boolean result = false;
         
-        Node leftChild = current.getLeftChild();
-        Node rightChild = current.getRightChild();
-        int currentValue = current.getValue();
+        Node<K, E> leftChild = current.getLeftChild();
+        Node<K, E> rightChild = current.getRightChild();
+        K currentKey = current.getKey();
 
-        if(valueToRemove < currentValue){
+        if(key.compareTo(currentKey) < 0){
             if(leftChild != null){
-                if(leftChild.getValue() == valueToRemove){
-                    removing(current, leftChild);
+                if(leftChild.getKey() == key){
+                    removingLeft(current, leftChild);
                     result = true;
                 }else{
-                    result = removeNodeByValue(leftChild, valueToRemove);
+                    result = removeNodeByKey(leftChild, key);
                 }
-            }//else inexisting child the value has not been found
+            }//else inexisting child the key has not been found
 
-        }else if(valueToRemove > currentValue){
+        }else if(key.compareTo(currentKey) > 0){
             if(rightChild != null){
-                if(rightChild.getValue() == valueToRemove){
-                    removing(current, rightChild);
+                if(rightChild.getKey() == key){
+                    removingRight(current, rightChild);
                     result = true;
                 }else{
-                    result = removeNodeByValue(rightChild, valueToRemove);
+                    result = removeNodeByKey(rightChild, key);
                 }
-            }//else inexisting child the value has not been found
+            }//else inexisting child the key has not been found
         }
             
         return result;
     }
 
     /**
-     * Remove the node and if necessary, move the child of removed node in its parent.
+     * Remove the node when it is left child, and if necessary, move the child of removed node.
      * */
-    private void removing(Node parent, Node nodeToRemove){
+    private void removingLeft(Node<K, E> parent, Node<K, E> nodeToRemove){
+        Node<K, E> leftChildNodeToRemove = nodeToRemove.getLeftChild();
+        Node<K, E> rightChildNodeToRemove = nodeToRemove.getRightChild();
 
-    }
-
-    /**
-     * Compare 3 int values and return the max.
-     * */
-    private int getMaxValue(int a, int b, int c){
-        int result;
-        if(a > b){
-            if(a > c){
-                result = a;
-            }else{
-                result = c;
-            }
+        if(leftChildNodeToRemove == null && rightChildNodeToRemove == null){
+            parent.setLeftChild(null);
+        }else if(leftChildNodeToRemove == null){
+            parent.setLeftChild(rightChildNodeToRemove);
+        }else if(rightChildNodeToRemove == null){
+            parent.setLeftChild(leftChildNodeToRemove);
         }else{
-            if(b > c){
-                result = b;
-            }else{
-                result = c;
-            }
+            parent.setLeftChild(leftChildNodeToRemove);
+            parent.addChild(rightChildNodeToRemove);
         }
-
-        return result;
     }
+    
+    /**
+     * Remove the node when it is right child, and if necessary, move the child of removed node.
+     * */
+    private void removingRight(Node<K, E> parent, Node<K, E> nodeToRemove){
+        Node<K, E> leftChildNodeToRemove = nodeToRemove.getLeftChild();
+        Node<K, E> rightChildNodeToRemove = nodeToRemove.getRightChild();
+
+        if(leftChildNodeToRemove == null && rightChildNodeToRemove == null){
+            parent.setRightChild(null);
+        }else if(leftChildNodeToRemove == null){
+            parent.setRightChild(rightChildNodeToRemove);
+        }else if(rightChildNodeToRemove == null){
+            parent.setRightChild(leftChildNodeToRemove);
+        }else{
+            parent.setRightChild(leftChildNodeToRemove);
+            parent.addChild(rightChildNodeToRemove);
+        }
+    }
+
+    //TODO
+//    /**
+//     * Compare 3 int values and return the max.
+//     * */
+//    private int getMaxValue(int a, int b, int c){
+//        int result;
+//        if(a > b){
+//            if(a > c){
+//                result = a;
+//            }else{
+//                result = c;
+//            }
+//        }else{
+//            if(b > c){
+//                result = b;
+//            }else{
+//                result = c;
+//            }
+//        }
+//
+//        return result;
+//    }
 
 }
