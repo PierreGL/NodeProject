@@ -25,23 +25,31 @@ public class NodeImpl<K extends Comparable<K> & Serializable, E extends Serializ
         this.entity = entity;
     }
     
-    public void addChild(Node<K, E> node){
+    public boolean addChild(Node<K, E> node){
+        
+        boolean result;
         
         if(node.getKey().compareTo(this.key) > 0){
             if(this.rightChild == null){
                 node.setParent(this);
-                this.rightChild = node;                
+                this.rightChild = node;
+                result = true;
             }else{
-                this.rightChild.addChild(node);
+                result = this.rightChild.addChild(node);
             }
         }else if(node.getKey().compareTo(this.key) < 0){
             if(this.leftChild == null){
                 node.setParent(this);
                 this.leftChild = node;
+                result = true;
             }else{
-                this.leftChild.addChild(node);
+                result = this.leftChild.addChild(node);
             }
+        }else{
+            result = false;
         }
+        
+        return result;
         
 //        if(node.getKey() > this.key){
 //            if(this.rightChild == null){

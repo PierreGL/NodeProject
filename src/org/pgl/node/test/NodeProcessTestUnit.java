@@ -62,6 +62,17 @@ public class NodeProcessTestUnit {
 //        Assert.assertTrue("The max value is incorrect", maxValue == expectedMaxValue);
 //    }
     
+    
+    @Test
+    public void testAddNode(){
+        //TODO
+    }
+    
+    @Test
+    public void testUpdateNode(){
+        //TODO
+    }
+    
     /**
      * Get different values located at several place in tree.
      * */

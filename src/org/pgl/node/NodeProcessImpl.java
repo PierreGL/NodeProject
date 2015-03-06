@@ -87,6 +87,12 @@ public class NodeProcessImpl<K extends Comparable<K>, E> implements NodeProcess<
             
         return result;
     }
+    
+    @Override
+    public boolean updateNode(Node<K, E> root, Node<K, E> node) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 
     /**
      * Remove the node when it is left child, and if necessary, move the child of removed node.
